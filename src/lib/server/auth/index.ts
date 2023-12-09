@@ -3,6 +3,7 @@ import { libsql } from '@lucia-auth/adapter-sqlite';
 import { libsqlClient } from '../db';
 import { sveltekit } from 'lucia/middleware';
 import { google } from '@lucia-auth/oauth/providers';
+import { env } from '$env/dynamic/private';
 
 export const auth = lucia({
 	adapter: libsql(libsqlClient, {
@@ -25,8 +26,8 @@ export const auth = lucia({
 });
 
 export const googleAuth = google(auth, {
-	clientId: '207013047010-hfpk9a7pko1b5mkr0qknnprp3312m4qd.apps.googleusercontent.com',
-	clientSecret: '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',
+	clientId: env.GOOGLE_CLIENT_ID!,
+	clientSecret: env.GOOGLE_CLIENT_SECRET!,
 	redirectUri: 'http://localhost:5173/auth/google/callback',
 	scope: ['profile', 'email']
 });
